@@ -119,6 +119,21 @@ extractor in `extract_cursor.py` does not cover)
   - System/user/assistant/tool turns with full content
   - Chat/agent ids, title, mode, created-at, code-context and diff flags
 
+### 10. `extract_zcode.py`
+Extracts from the ZCode SQLite database. Requires Python 3.7+.
+- **Default database**: `~/.zcode/cli/db/db.sqlite`
+- **Custom database**: `python3 extract_zcode.py --db /path/to/db.sqlite`
+- **Includes**:
+  - User/assistant messages, reasoning, tool calls, completed results, and tool errors
+  - Attachment metadata, model information, timestamps, and session metadata
+  - Parent session IDs, task types, goals, and todos
+- **Snapshot**: Opens the source read-only and uses SQLite backup for a consistent snapshot, including committed WAL rows.
+- **Limits**: Keeps each session separate and preserves parent IDs without reconstructing ancestor messages.
+  Skips `step-start`, `step-finish`, `timeline`, and `compaction` parts.
+
+The contributor tested this extractor against one local ZCode database.
+Future ZCode updates can change the schema. Compatibility with those updates is not guaranteed.
+
 ## 🚀 Quick Start
 
 ### Installation
@@ -158,6 +173,9 @@ python3 extract_opencode.py
 # Extract from Cursor CLI (cursor-agent)
 python3 extract_cursor_cli.py
 
+# Extract from ZCode (Python 3.7+)
+python3 extract_zcode.py
+
 # Extract from ALL tools at once
 ./extract_all.sh
 ```
@@ -177,6 +195,8 @@ extracted_data/
 ├── continue_conversations_20250116_143145.jsonl
 └── opencode_conversations_20250116_143200.jsonl
 ```
+
+ZCode exports use `extracted_data/zcode_conversations_<timestamp>.jsonl`.
 
 ## 📊 Output Format
 
