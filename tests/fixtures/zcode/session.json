@@ -1,0 +1,65 @@
+{
+  "session": {
+    "id": "session-main",
+    "parent_id": "session-parent",
+    "task_type": "subagent",
+    "slug": "sample-session",
+    "directory": "/work/example",
+    "title": "Synthetic session",
+    "title_source": "user",
+    "version": "test-version",
+    "share_url": "https://example.invalid/session",
+    "time_created": 1000,
+    "time_updated": 2000,
+    "time_archived": null
+  },
+  "messages": [
+    {
+      "id": "message-user",
+      "time_created": 1001,
+      "data": {"role": "user", "time": {"created": 1002}},
+      "parts": [
+        {"type": "text", "text": "Synthetic question"},
+        {"type": "file", "filename": "sample.txt", "mime": "text/plain", "url": "file:///work/sample.txt"}
+      ]
+    },
+    {
+      "id": "message-assistant",
+      "time_created": 1003,
+      "data": {
+        "role": "assistant",
+        "time": {"created": 1004},
+        "parentID": "message-user",
+        "modelID": "test-model",
+        "providerID": "test-provider",
+        "mode": "build",
+        "agent": "test-agent",
+        "cost": 0.1,
+        "tokens": {"input": 3, "output": 4},
+        "path": {"cwd": "/work/example"},
+        "summary": false,
+        "error": {"name": "test-error"},
+        "finish": "stop",
+        "variant": "test-variant"
+      },
+      "parts": [
+        {"type": "text", "text": "First line\u2028middle\u2029end"},
+        {"type": "text", "text": "Second line"},
+        {"type": "reasoning", "text": "First thought"},
+        {"type": "reasoning", "text": "Second thought"},
+        {"type": "tool", "callID": "call-complete", "tool": "read", "state": {"status": "completed", "input": {"path": "sample.txt"}, "output": "Synthetic output"}},
+        {"type": "tool", "callID": "call-error", "tool": "bash", "state": {"status": "error", "input": {"command": "false"}, "error": "Synthetic failure"}},
+        {"type": "tool", "callID": "call-pending", "tool": "bash", "state": {"status": "running", "input": {"command": "wait"}}},
+        {"type": "step-start", "text": "Excluded start"},
+        {"type": "step-finish", "text": "Excluded finish"},
+        {"type": "timeline", "text": "Excluded timeline"},
+        {"type": "compaction", "text": "Excluded compaction"}
+      ]
+    }
+  ],
+  "goal": {"objective": "Synthetic objective", "status": "active", "token_budget": 100, "tokens_used": 7, "time_used_seconds": 1.5},
+  "todos": [
+    {"content": "First synthetic task", "status": "completed", "priority": "high"},
+    {"content": "Second synthetic task", "status": "pending", "priority": "low"}
+  ]
+}

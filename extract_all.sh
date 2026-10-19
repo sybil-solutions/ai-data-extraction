@@ -86,6 +86,14 @@ else
 fi
 echo ""
 
+echo "Extracting from ZCode..."
+if python3 extract_zcode.py 2>&1 | tee extracted_data/zcode_extraction.log | grep -q "Total conversations extracted: [1-9]"; then
+    found_tools+=("ZCode")
+else
+    not_found+=("ZCode")
+fi
+echo ""
+
 # Pi and OMP share an ancestry-aware parser; Droid has its own session format.
 for tool in pi omp droid; do
     echo "🔍 Extracting from $tool..."
