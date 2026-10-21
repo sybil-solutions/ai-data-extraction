@@ -158,6 +158,9 @@ python3 extract_opencode.py
 # Extract from Cursor CLI (cursor-agent)
 python3 extract_cursor_cli.py
 
+# Extract from Grok Build
+python3 extract_grok.py
+
 # Extract from ALL tools at once
 ./extract_all.sh
 ```
